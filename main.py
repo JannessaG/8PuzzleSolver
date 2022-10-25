@@ -97,6 +97,63 @@ def bfs(root):
     end_time = time.time()
     runTime = end_time - start_time
     return
+    
+# Heuristic function that calculate the manhattan distance and euclidean distance
+def heuristic(state):
+    manhattan_distance = 0
+    euclid_distance = 0
+    stateStr = str(state)
+    stateStr = stateStr if len(stateStr) > 8 else "0" + "".join(stateStr)
+    res = [int(x) for x in stateStr]
+    for i in res:
+        curr_row = res[i] // 3
+        curr_column = res[i] % 3
+        proj_row = i // 3
+        proj_column = i % 3
+        x = abs(curr_row - proj_row) + abs(curr_column - proj_column)
+        manhattan_distance += x
+    return manhattan_distance, euclid_distance
+
+# A star algorithm
+def astar(root, type="manhattan"):
+    start_time = time.time()
+    global nodesExpanded, maxDepth, isFound, runTime
+    __reset__()
+    explored = set()
+    frontier = PriorityQueue()
+    frontier.put(root)
+    expanded = dict()  # Frontier union Explored
+    h, e = heuristic(root.state)
+    cost = h if type == "manhattan" else e
+    root.cost = cost
+    expanded[root.state] = cost
+    while not frontier.empty() and explored.__len__() != 181441:
+        node = frontier.get()
+        explored.add(node)
+        if node.state == goalState:
+            isFound = True
+            end_time = time.time()
+            runTime = end_time - start_time
+            return node
+        children = __get__children(node)
+        for child in children:
+            h, e = heuristic(child.state)
+            cost = h if type == "manhattan" else e
+            child.cost = cost + child.depth
+            if child.state not in expanded:
+                frontier.put(child)
+                expanded[child.state] = child.cost
+                nodesExpanded += 1
+                maxDepth = maxDepth if maxDepth > child.depth else child.depth
+
+            if ((child not in explored) and (child.state in expanded)) and expanded.get(
+                    child.state) > child.cost:  # child is in frontier and has a cost more than current child
+                frontier.put(child)
+                expanded[child.state] = child.cost
+    isFound = False
+    end_time = time.time()
+    runTime = end_time - start_time
+    return
 
 def __move__down(state):
     index = state.index('0')  # get the index of the zero (Blank Space)
@@ -163,6 +220,8 @@ def solution(gameState, algorithm):
     answer = None
     if algorithm == 'BFS':
         answer = bfs(gameState)
+    elif algorithm == 'A*':
+        answer = astar(gameState)
     if isFound:
         return answer
     else:

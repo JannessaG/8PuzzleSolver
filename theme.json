@@ -1,0 +1,50 @@
+{
+   "button":
+   {
+
+      "colours":
+      {
+         "normal_bg": "#9803fc",
+         "hovered_bg": "#8900e6",
+         "disabled_bg": "#280340",
+         "selected_bg": "#280340",
+         "active_bg": "#280340",
+         "normal_text": "#FFFFFF",
+         "hovered_text": "#BFD7ED",
+         "selected_text": "#FFFFFF",
+         "disabled_text": "#6d736f",
+         "active_text": "#FFFFFF",
+         "normal_border": "#FFFFFF",
+         "hovered_border": "#B0B0B0",
+         "disabled_border": "#808080",
+         "selected_border": "#003B73",
+         "active_border": "#003B73"
+      },
+      "misc":
+      {
+         "tool_tip_delay": "1.5",
+         "shape":"rounded_rectangle"
+      },
+      "font":
+      {
+          "name": "fira_code",
+          "size": "20",
+          "bold": "1",
+          "italic": "0"
+      }
+   },
+   "drop_down_menu":
+   {
+
+      "colours":
+      {
+         "normal_border": "#FFFFFF"
+      },
+      "misc":
+      {
+         "shape":"rounded_rectangle",
+         "expand_direction": "down" 
+      }
+   }
+
+}

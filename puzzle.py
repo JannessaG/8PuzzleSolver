@@ -3,7 +3,7 @@ import pygame_gui
 from colors import *
 from main import *
 
-APPLICATION_TITLE = "8 Puzzle Solver Using BFS Algo"
+APPLICATION_TITLE = "8 Puzzle Solver Using BFS & ASTAR Algo"
 
 ALERTLABELEVENT = pygame.USEREVENT + 2
 
@@ -14,7 +14,7 @@ BASICFONT = pygame.font.SysFont('Arial Bold', BASICFONTSIZE)
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
 # The UI manager handles calling the update, draw and event handling
-manager = pygame_gui.UIManager((WINDOW_WIDTH, WINDOW_HEIGHT))
+manager = pygame_gui.UIManager((WINDOW_WIDTH, WINDOW_HEIGHT),'theme.json')
 
 pygame.display.set_caption(APPLICATION_TITLE)
 
@@ -122,13 +122,19 @@ randomStateButtonRect = ButtonRect(4)
 randomStateButton = pygame_gui.elements.UIButton(
     relative_rect=randomStateButtonRect.Rect, text="RANDOM", manager=manager
 )
+#Shows option for solution
+solveChoiceRect = ButtonRect(5)
+solveChoice = pygame_gui.elements.UIDropDownMenu(
+    ["BFS", "A*"], "ALGORITHM",
+    relative_rect=solveChoiceRect.Rect, manager=manager)
+
 # Solves the puzzle button
-solveButtonRect = ButtonRect(5)
+solveButtonRect = ButtonRect(6)
 solveButton = pygame_gui.elements.UIButton(
     relative_rect=solveButtonRect.Rect, text="SOLVE", manager=manager
 )
 #alerts if no solution found
-alertLabelRect = ButtonRect(6)
+alertLabelRect = ButtonRect(7)
 alertLabel = pygame_gui.elements.UILabel(
     relative_rect=alertLabelRect.Rect, manager=manager, text=" "
 )
@@ -170,7 +176,7 @@ while running:
                     solutionExists = False
                 elif event.ui_element == solveButton:
                     if initialState.state != goalState:
-                        type_of_search = "BFS"
+                        type_of_search = solveChoice.selected_option
                         answer = solution(initialState, type_of_search)
                         path_to_goal = iterative_get_path_(answer)
                         solveButton.disable()
