@@ -125,7 +125,7 @@ randomStateButton = pygame_gui.elements.UIButton(
 #Shows option for solution
 solveChoiceRect = ButtonRect(5)
 solveChoice = pygame_gui.elements.UIDropDownMenu(
-    ["BFS", "A*"], "ALGORITHM",
+    ["BFS", "A* Manhattan"], "ALGORITHM",
     relative_rect=solveChoiceRect.Rect, manager=manager)
 
 # Solves the puzzle button
